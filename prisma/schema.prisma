@@ -13,14 +13,16 @@ datasource db {
 }
 
 model Org {
-  id       String @id @default(uuid())
-  name     String
-  email    String @unique
-  whatsapp String @unique
-  address  String
-  city     String
-  state    String
-  pets     Pet[]
+  id            String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  whatsapp      String   @unique
+  password_hash String
+  address       String
+  city          String
+  state         String
+  pets          Pet[]
+  created_at    DateTime @default(now())
 
   @@map("orgs")
 }
@@ -34,7 +36,7 @@ enum Species {
 }
 
 model Pet {
-  id          String  @id @default(uuid())
+  id          String   @id @default(uuid())
   name        String
   species     Species
   race        String
@@ -42,6 +44,8 @@ model Pet {
   size        String
   age         String
   description String
+  created_at  DateTime @default(now())
+  updated_at  DateTime
 
   org    Org    @relation(fields: [org_id], references: [id])
   org_id String
