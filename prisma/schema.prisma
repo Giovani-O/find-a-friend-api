@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Org {
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  whatsapp String @unique
+  address  String
+  city     String
+  state    String
+  pets     Pet[]
+
+  @@map("orgs")
+}
+
+enum Species {
+  CAT
+  DOG
+  BIRD
+  RODENT
+  OTHER
+}
+
+model Pet {
+  id          String  @id @default(uuid())
+  name        String
+  species     Species
+  race        String
+  color       String
+  size        String
+  age         String
+  description String
+
+  org    Org    @relation(fields: [org_id], references: [id])
+  org_id String
+
+  @@map("pets")
+}
