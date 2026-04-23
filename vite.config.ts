@@ -14,15 +14,15 @@ export default defineConfig({
           dir: 'src/tests/unit',
         },
       },
-      // {
-      //   extends: true,
-      //   test: {
-      //     name: 'e2e',
-      //     dir: 'src/tests/e2e',
-      //     environment:
-      //       './prisma/vitest-environment-prisma/prisma-test-environment.ts',
-      //   },
-      // },
+      {
+        extends: true,
+        test: {
+          name: 'e2e',
+          dir: 'src/tests/e2e',
+          environment:
+            './prisma/vitest-environment-prisma/prisma-test-environment.ts',
+        },
+      },
     ],
   },
 })
