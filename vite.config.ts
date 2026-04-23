@@ -4,26 +4,25 @@ export default defineConfig({
   resolve: {
     tsconfigPaths: true,
   },
-  // Configurar quando iniciarmos testes
-  // test: {
-  //   dir: 'src',
-  //   projects: [
-  //     {
-  //       extends: true,
-  //       test: {
-  //         name: 'unit',
-  //         dir: 'src/services',
-  //       },
-  //     },
-  //     {
-  //       extends: true,
-  //       test: {
-  //         name: 'e2e',
-  //         dir: 'src/http/controllers',
-  //         environment:
-  //           './prisma/vitest-environment-prisma/prisma-test-environment.ts',
-  //       },
-  //     },
-  //   ],
-  // },
+  test: {
+    dir: 'src',
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: 'unit',
+          dir: 'src/tests/unit',
+        },
+      },
+      // {
+      //   extends: true,
+      //   test: {
+      //     name: 'e2e',
+      //     dir: 'src/tests/e2e',
+      //     environment:
+      //       './prisma/vitest-environment-prisma/prisma-test-environment.ts',
+      //   },
+      // },
+    ],
+  },
 })
