@@ -1,3 +1,4 @@
+import { hash } from 'bcryptjs'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { OrgInMemoryRepository } from '@/repositories/in-memory/org-in-memory.repository'
 import { FetchByCityUseCase } from '@/use-case/org/fetch-by-city.use-case'
@@ -9,7 +10,7 @@ const testOrg = {
   name: 'John Doe Org',
   email: 'org@mail.com',
   whatsapp: '(19) 99999-9999',
-  password_hash: '123456',
+  password_hash: '',
   address: 'Rua Tal, 39',
   city: 'Campinas',
   state: 'SP',
@@ -22,11 +23,15 @@ describe('Org fetch by city tests', () => {
   })
 
   it('should find orgs by city', async () => {
-    const newOrg1 = await inMemoryRepository.create({ ...testOrg })
+    const newOrg1 = await inMemoryRepository.create({
+      ...testOrg,
+      password_hash: await hash('123456', 6),
+    })
     const newOrg2 = await inMemoryRepository.create({
       ...testOrg,
       email: 'org2@mail.com',
       whatsapp: '(19) 98888-8888',
+      password_hash: await hash('123456', 6),
     })
     // Org in different city
     await inMemoryRepository.create({
@@ -34,6 +39,7 @@ describe('Org fetch by city tests', () => {
       city: 'Sumaré',
       email: 'org3@mail.com',
       whatsapp: '(19) 98888-8888',
+      password_hash: await hash('123456', 6),
     })
 
     const { orgs } = await sut.execute({ city: 'Campinas' })
