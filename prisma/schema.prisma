@@ -52,7 +52,7 @@ model Pet {
   age         String
   description String
   created_at  DateTime @default(now())
-  updated_at  DateTime
+  updated_at  DateTime @default(now())
 
   org    Org    @relation(fields: [org_id], references: [id])
   org_id String
