@@ -1,18 +1,12 @@
 import request from 'supertest'
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { app } from '@/app.js'
+import '@/tests/@utils/test-setup.js'
+import { createOrg } from '@/tests/@utils/org.js'
 
 describe('Refresh Token (E2E)', () => {
-  beforeAll(async () => {
-    await app.ready()
-  })
-
-  afterAll(async () => {
-    await app.close()
-  })
-
   it('should be able to refresh token', async () => {
-    await request(app.server).post('/orgs').send({
+    await createOrg({
       name: 'Refresh Org',
       email: 'org@mail.com',
       whatsapp: '(19) 99999-9999',

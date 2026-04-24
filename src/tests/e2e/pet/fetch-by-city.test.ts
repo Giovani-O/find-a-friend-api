@@ -1,18 +1,12 @@
 import request from 'supertest'
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { app } from '@/app.js'
+import '@/tests/@utils/test-setup.js'
+import { createOrgAndSession } from '@/tests/@utils/org.js'
 
 describe('Pet Fetch By City (E2E)', () => {
-  beforeAll(async () => {
-    await app.ready()
-  })
-
-  afterAll(async () => {
-    await app.close()
-  })
-
   it('should be able to fetch pets by city', async () => {
-    const orgResponse = await request(app.server).post('/orgs').send({
+    const { token } = await createOrgAndSession({
       name: 'City Pet Org',
       email: 'citypet@mail.com',
       whatsapp: '(51) 93333-2222',
@@ -21,15 +15,6 @@ describe('Pet Fetch By City (E2E)', () => {
       city: 'Porto Alegre',
       state: 'RS',
     })
-    expect(orgResponse.statusCode).toBe(201)
-
-    const sessionResponse = await request(app.server).post('/sessions').send({
-      email: 'citypet@mail.com',
-      password: '123456',
-    })
-    expect(sessionResponse.statusCode).toBe(200)
-
-    const token = sessionResponse.body.token
 
     await request(app.server)
       .post('/pets')
