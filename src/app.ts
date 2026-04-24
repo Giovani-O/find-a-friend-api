@@ -4,6 +4,7 @@ import fastify from 'fastify'
 import { env } from './env.js'
 import { healthRoute } from './http/controllers/health/routes.js'
 import { orgRoutes } from './http/controllers/org/routes.js'
+import { petRoutes } from './http/controllers/pet/routes.js'
 
 export const app = fastify()
 
@@ -21,3 +22,4 @@ app.register(fastifyCookie)
 
 app.register(healthRoute)
 app.register(orgRoutes)
+app.register(petRoutes)

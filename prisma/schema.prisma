@@ -35,17 +35,24 @@ enum Species {
   OTHER
 }
 
+enum Size {
+  MICRO
+  SMALL
+  MEDIUM
+  LARGE
+}
+
 model Pet {
   id          String   @id @default(uuid())
   name        String
   species     Species
   race        String
   color       String
-  size        String
+  size        Size
   age         String
   description String
   created_at  DateTime @default(now())
-  updated_at  DateTime
+  updated_at  DateTime @default(now())
 
   org    Org    @relation(fields: [org_id], references: [id])
   org_id String
